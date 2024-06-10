@@ -1,4 +1,4 @@
-from Solver2 import ExpressionSolver
+from Solver import ExpressionSolver
 
 
 if __name__ == '__main__':
@@ -13,12 +13,15 @@ if __name__ == '__main__':
             break
         
         Steps = None
-        Solution = solver.solve(n)
+        Solution = solver.solve(
+            expression = n, 
+            steps_return = solver.StepsReturnAsStream
+        )
         
         if len(Solution) > 1:
-            Steps = Solution[1]
+            # Steps = Solution[1]
             Solution = Solution[0]
             
         print(f'{Solution = }')
-        if Steps: print(f'{Steps = }')
+        # if Steps: print(f'{Steps = }')
 

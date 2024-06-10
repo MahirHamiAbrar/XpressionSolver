@@ -143,8 +143,7 @@ class ExpressionSolver:
         
         stack = Stack()     # create a stack object
         
-        if steps_return == self.StepsReturnAsList:
-            stepsList = []
+        stepsList = []
                 
         # iterate over all items in the postfix list
         for item in postfix:
