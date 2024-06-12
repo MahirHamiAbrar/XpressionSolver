@@ -226,7 +226,7 @@ class ExpressionSolver:
     def listifiy_input(self, expression: str) -> list:
         expression = expression.replace(" ", "")
         # d/dx(x^2) + 2*x + 30
-        keys = list(self._precedence.keys()) + ['x', 'y', 'I']
+        keys = list(self._precedence.keys()) + ['x', 'y', 'I', "dx"]
 
         final = []
 
@@ -260,6 +260,8 @@ class ExpressionSolver:
                 i+=j-1
             i+=1
 
+        if item: final.append(item)
+
         return final
 
 
@@ -284,13 +286,15 @@ if __name__ == '__main__':
     # solution = solver.solve(expression)
     
     # print(f"Solution = {solve[0]}")
-    expressions = ["d/dx(x^2) + 2*x + 30 + ln(900))",
-                "y+d/dx(x^2+2*x+30)",
-                "10 + d/dx( 20 * 2 - I( 54 / 3 ^ 3 )dx * 2 ) * 5",
-                "-10 + (30 * -23) - (24 / 6) ",
-                "d/dy (-10 + x * (30 * -23) - (24 / 6) * y )",
-                "28.70 + (30 * -23.5) - (24 / 6.2)",
-                "+420 + y - y^2 - (24 / x)"]
+    expressions = [
+                    "d/dx(x^2) + 2*x + 30 + ln(900))",
+                    "y+d/dx(x^2+2*x+30)",
+                    "10 + d/dx( 20 * 2 - I( 54 / 3 ^ 3 )dx * 2 ) * 5",
+                    "-10 + (30 * -23) - (24 / 6) ",
+                    "d/dy (-10 + x * (30 * -23) - (24 / 6) * y )",
+                    "28.70 + (30 * -23.5) - (24 / 6.2)",
+                    "+420 + y - y^2 - (24 / x)"
+                ]
     for expression in expressions:
         listify = solver.listifiy_input(expression)
         print(f"{expression=}\n{listify=}", end="\n\n")
