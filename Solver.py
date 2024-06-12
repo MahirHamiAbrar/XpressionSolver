@@ -222,29 +222,78 @@ class ExpressionSolver:
         
         # return the result
         return result
+    
+    def listifiy_input(self, expression: str) -> list:
+        expression = expression.replace(" ", "")
+        # d/dx(x^2) + 2*x + 30
+        keys = list(self._precedence.keys()) + ['x', 'y', 'I']
+
+        final = []
+
+        def _is_match(character, keys: list[int], index: int):
+            matched = []
+            for key in keys:
+                if index < len(key) and key[index] == character:
+                    matched.append(key)
+            return matched
+
+        item = ""
+        i = 0
+        while i < len(expression):
+            matched_keys = _is_match(expression[i], keys, 0)
+            # if doesn't match with keys, (no special op eg: 30)
+            if matched_keys.__len__() == 0:
+                item+=expression[i]
+            else:
+                if item: final.append(item)
+                # d matched in d/dx
+                j = 1
+                matched_item = expression[i]
+
+                while matched_keys.__len__() != 0 and i + j < len(expression):
+                    matched_keys = _is_match(expression[i+j], matched_keys, j)
+                    if matched_keys.__len__() != 0:
+                        matched_item+=expression[i+j]
+                        j+=1
+                if matched_item: final.append(matched_item)
+                item = ""
+                i+=j-1
+            i+=1
+
+        return final
 
 
 if __name__ == '__main__':
-    expressions = [
-        "5 * ( 6 + 2 ) - 12 / 4",   # [5, 6, 2, '+', '*', 12, 4, '/', '-'],
-        "A + ( B * C - ( D / E ^ F ) * G ) * H",
-        "10 + ( 20 * 2 - ( 54 / 3 ^ 3 ) * 2 ) * 5",
-        "5 + (6 * 2) + 3",
-        "(10 + 8 * 9 - 120 * (100 - 60)) / 16"
-    ]
-    
-    # expression = expressions[0].replace(' ', '')
-    expression = expressions[2]
-    print(f"Expression\t= {expression}")
-    
     solver = ExpressionSolver()
-    infix = solver.toInfix(expression)
-    ifxeqn, postfix = solver.toPostfix(infix)
-    solve = solver.evaluate(ifxeqn, postfix)
-    solution = ''
+    # expressions = [
+    #     "5 * ( 6 + 2 ) - 12 / 4",   # [5, 6, 2, '+', '*', 12, 4, '/', '-'],
+    #     "A + ( B * C - ( D / E ^ F ) * G ) * H",
+    #     "10 + ( 20 * 2 - ( 54 / 3 ^ 3 ) * 2 ) * 5",
+    #     "5 + (6 * 2) + 3",
+    #     "(10 + 8 * 9 - 120 * (100 - 60)) / 16"
+    # ]
+    
+    # # expression = expressions[0].replace(' ', '')
+    # expression = expressions[2]
+    # # print(f"Expression\t= {expression}")
+    
+    # infix = solver.toInfix(expression)
+    # ifxeqn, postfix = solver.toPostfix(infix)
+    # solve = solver.evaluate(ifxeqn, postfix)
+    # solution = ''
     # solution = solver.solve(expression)
     
-    print(f"Solution = {solve[0]}")
+    # print(f"Solution = {solve[0]}")
+    expressions = ["d/dx(x^2) + 2*x + 30 + ln(900))",
+                "y+d/dx(x^2+2*x+30)",
+                "10 + d/dx( 20 * 2 - I( 54 / 3 ^ 3 )dx * 2 ) * 5",
+                "-10 + (30 * -23) - (24 / 6) ",
+                "d/dy (-10 + x * (30 * -23) - (24 / 6) * y )",
+                "28.70 + (30 * -23.5) - (24 / 6.2)",
+                "+420 + y - y^2 - (24 / x)"]
+    for expression in expressions:
+        listify = solver.listifiy_input(expression)
+        print(f"{expression=}\n{listify=}", end="\n\n")
     # print(f"Solution = {solve[0]}\n{infix = }\n{postfix = }")
     
     # print(f"{expression = }\n{infix = }\n{postfix = }\n{solve = }\n{solution = }")
