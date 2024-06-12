@@ -11,14 +11,35 @@ class ExpressionSolver:
         
         # PEDMAS PRECEDENCE
         self._precedence = {
-            '(' : 10,    # highest precedence
-            ')' : 10,
-            '^' : 9,
-            '/' : 8,
-            '*' : 7,
-            '+' : 6,
-            '-' : 5     # lowest precedence
+            
+            # parenthesis
+            '(' : 102,    # highest precedence
+            ')' : 102,
+            '[' : 101,
+            ']' : 101,
+            '{' : 100,
+            '}' : 100,
+            
+            # logarithms
+            'log': 300,
+            'ln' : 300,
+            'e' : 300,
+            'pi' : 300,
+            
+            # differential
+            'd/dx': 300,
+            'd/dy': 300,
+            
+            # calculation operator
+            '^' : 10,
+            '/' : 9,
+            '*' : 8,
+            '+' : 7,
+            '-' : 6     # lowest precedence
         }
+        
+        # self._opening_brkts = list('[{(')
+        # self._closing_brkts = list(')}]')
         
         self._streamer = None
     
@@ -208,7 +229,8 @@ if __name__ == '__main__':
         "5 * ( 6 + 2 ) - 12 / 4",   # [5, 6, 2, '+', '*', 12, 4, '/', '-'],
         "A + ( B * C - ( D / E ^ F ) * G ) * H",
         "10 + ( 20 * 2 - ( 54 / 3 ^ 3 ) * 2 ) * 5",
-        "5 + (6 * 2) + 3"
+        "5 + (6 * 2) + 3",
+        "(10 + 8 * 9 - 120 * (100 - 60)) / 16"
     ]
     
     # expression = expressions[0].replace(' ', '')
