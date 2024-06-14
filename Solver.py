@@ -227,7 +227,8 @@ class ExpressionSolver:
         expression = expression.replace(" ", "")
         # ['(', ')', '[', ']', '{', '}', 'log', 'ln', 'e', 'pi', 'd/dx', 'd/dy', '^', '/', '*', '+', '-', 'x', 'y', 'I', 'dx']
         # keys = ['(', ')', '[', ']', '{', '}', 'log', 'ln', 'e', 'pi', 'd/dx', 'd/dy', '^'] + ['x', 'y', 'I', "dx", "sin", "tan", "cos", "cosec", "cot", "sec", "log", "ln", "exp", "pi", "logX", "fact", "root","sinI", "cosI", "tanI", "cosecI", "cotI", "secI"]
-        keys = list(self._precedence.keys()) + ['x', 'y', 'I', "dx", "sin", "tan", "cos", "cosec", "cot", "sec", "log", "ln", "exp", "pi", "logX", "fact", "root","sinI", "cosI", "tanI", "cosecI", "cotI", "secI"]
+        keys = list(self._precedence.keys()) + ['x', 'y', 'I', "dx", "sin", "tan", "cos", "cosec", "cot", "sec",
+                                                "log", "ln", "exp", "pi", "logX", "fact", "root", "asin", "acos", "atan", "acsc", "acot", "asec", "abs"]
 
         final = []
 
