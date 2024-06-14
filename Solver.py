@@ -1,5 +1,3 @@
-import sys
-sys.path.append("/home/mhabrar/Programming/Projects/XpressionSolver")
 from typing import Callable
 from Utils.Stack import Stack
 
