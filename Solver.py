@@ -223,10 +223,11 @@ class ExpressionSolver:
         # return the result
         return result
     
-    def listifiy_input(self, expression: str) -> list:
+    def listifiy_input(self, expression: str) -> list[str]:
         expression = expression.replace(" ", "")
-        # d/dx(x^2) + 2*x + 30
-        keys = list(self._precedence.keys()) + ['x', 'y', 'I', "dx"]
+        # ['(', ')', '[', ']', '{', '}', 'log', 'ln', 'e', 'pi', 'd/dx', 'd/dy', '^', '/', '*', '+', '-', 'x', 'y', 'I', 'dx']
+        # keys = ['(', ')', '[', ']', '{', '}', 'log', 'ln', 'e', 'pi', 'd/dx', 'd/dy', '^'] + ['x', 'y', 'I', "dx", "sin", "tan", "cos", "cosec", "cot", "sec", "log", "ln", "exp", "pi", "logX", "fact", "root","sinI", "cosI", "tanI", "cosecI", "cotI", "secI"]
+        keys = list(self._precedence.keys()) + ['x', 'y', 'I', "dx", "sin", "tan", "cos", "cosec", "cot", "sec", "log", "ln", "exp", "pi", "logX", "fact", "root","sinI", "cosI", "tanI", "cosecI", "cotI", "secI"]
 
         final = []
 
@@ -293,7 +294,8 @@ if __name__ == '__main__':
                     "-10 + (30 * -23) - (24 / 6) ",
                     "d/dy (-10 + x * (30 * -23) - (24 / 6) * y )",
                     "28.70 + (30 * -23.5) - (24 / 6.2)",
-                    "+420 + y - y^2 - (24 / x)"
+                    "+420 + y - y^2 - (24 / x)",
+                    "(sin(10))^2 + sinI(-.5)"
                 ]
     for expression in expressions:
         listify = solver.listifiy_input(expression)
